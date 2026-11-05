@@ -4,6 +4,27 @@ Same automation as the Python/GitHub Actions project, but running entirely
 inside Google: no Cloud Console, no OAuth client, no secrets to store.
 Authorization is a single "Allow" click tied to your own Google account.
 
+## Before you start
+
+Have these ready — you'll paste their IDs into `Config.gs` in step 3:
+
+| You need | Where to get it |
+|---|---|
+| An invoice Google Sheet | Must be a native Google Sheet (not uploaded `.xlsx`). Note its tab name and which cells hold the invoice number, date, and period. |
+| A Google Doc template | Must be a native Google Doc (not uploaded `.docx` — see step 4). Put the literal text `{{DATE}}` wherever the date should go. |
+| A Drive folder | Empty folder to archive each month's generated PDFs. |
+| A recipient email address | Who the invoice gets sent to. |
+
+Every ID below comes from a Drive URL:
+- Sheet ID: `docs.google.com/spreadsheets/d/`**`<THIS>`**`/edit`
+- Doc ID: `docs.google.com/document/d/`**`<THIS>`**`/edit`
+- Folder ID: `drive.google.com/drive/folders/`**`<THIS>`**
+
+This repo's `Config.gs` ships with placeholder values (`1Q4iIIII...`,
+`test1@gmail.com`, etc.) — every one of those needs replacing with your own
+before the script will work. None of them are real secrets, so it's safe to
+have them in a public repo.
+
 ## Setup (about 10 minutes)
 
 1. **Create the script project.**
@@ -37,18 +58,31 @@ Authorization is a single "Allow" click tied to your own Google account.
    the code — only the `email.html` filename matters, since `config.gs`
    references it by name (`bodyTemplateFile: 'email'`).
 
-3. **Check the settings in config.gs.**
-   Everything is already filled in — spreadsheet ID, tab name, cells
-   (`D2`/`D3`/`D6`), Doc template ID, archive folder, and
-   `shounsalaji@gmail.com` as the recipient. If anything changes later
-   (a new recipient, a moved file, a different cell), this is the only
-   file you should need to edit.
+3. **Fill in the settings in config.gs.**
+   Replace every placeholder value with your own, using the table from
+   "Before you start":
+   - `spreadsheetId` — your Sheet's ID.
+   - `tabName` — the exact tab name (case-sensitive) at the bottom of
+     the Sheet.
+   - `cells.invoiceNumber` / `invoiceDate` / `period` — which cells in
+     that tab hold each value, e.g. `D2`, `D3`, `D6`.
+   - `invoice.numberPrefix` / `numberPadding` — match whatever's
+     currently in the invoice number cell (e.g. `INV_07` → prefix
+     `INV_`, padding `2`).
+   - `doc.templateId` — your Doc template's ID.
+   - `archiveFolderId` — your archive folder's ID.
+   - `email.to` — the real recipient address(es).
+   - `notify.recipient` — your own address, if you want run notifications
+     (see step 8).
+
+   This is the only file you should need to edit now or later — for a
+   new recipient, a moved file, or a different cell, change it here.
 
 4. **Confirm the Doc template has its placeholder.**
    The Doc must contain the literal text `{{DATE}}` (and `{{INVOICE_NO}}`
    if you want the number in the letter too) — the script fails loudly if
    it can't find it. It must also be a real **Google Doc**, not an
-   uploaded Word file — `DocumentApp` can only edit native Google Docs. If
+   uploaded Word file or any other txt format — `DocumentApp` can only edit native Google Docs. If
    you started from a `.docx`, open it in Drive and use **File → Save as
    Google Docs** first, then point `templateId` at that new file.
 
@@ -131,21 +165,3 @@ the permission itself. If you need the *permission* itself scoped down
 too, the only real way is running this under a separate Google account
 that has nothing shared with it except these three files/folder — ask if
 you want that set up instead.
-
-## How it differs from the Python/GitHub version
-
-- **State**: `PropertiesService.getScriptProperties()` instead of Drive
-  `appProperties` — same idea (`preparedMonth`/`preparedInvoiceNo`,
-  `sentMonth`/`sentInvoiceNo`/`sentAt`, plus `lastInvoiceNo` so numbering
-  keeps advancing even though the master Sheet's cell never changes),
-  just a different store.
-- **Auth**: implicit, tied to whoever owns/runs the script — no client
-  ID/secret/refresh token.
-- **Retries**: Google API calls aren't retried with backoff here the way
-  the Python version does for 429/5xx; the one exception is opening a
-  freshly-copied Doc (`openDocWithRetry_`), which retries with increasing
-  delays since a brand-new copy can briefly be inaccessible right after
-  creation.
-- **Tests**: there's no equivalent of the pytest suite — Apps Script
-  doesn't have a practical local test runner for this. Rely on the dry
-  run + manual test sequence above before trusting the schedule.

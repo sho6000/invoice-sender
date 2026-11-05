@@ -10,4 +10,6 @@ version works internally.
 **Implementation:** [`apps-script/`](apps-script/) — a Google Apps Script
 project (no Cloud Console, no OAuth client, no secrets to store).
 
-**Setup instructions:** [`apps-script/README-apps-script.md`](apps-script/README-apps-script.md)
+**Setup instructions:** 
+Checkout the installation guide for the apps-script here:
+[`apps-script/README-apps-script.md`](apps-script/README-apps-script.md)

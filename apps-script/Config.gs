@@ -19,10 +19,10 @@ const CONFIG = {
   // IANA timezone used for every computed date.
   timezone: 'Asia/Kolkata',
 
-  // From the Sheet's URL: docs.google.com/spreadsheets/d/<THIS>/edit
-  spreadsheetId: '1Q4iIIIIIIIIIIiiiiIiIiiIiiiiiii',
+  // REQUIRED: From the Sheet's URL: docs.google.com/spreadsheets/d/<THIS>/edit
+  spreadsheetId: '1Q4iIIIIIIIIIIiiiiIiIiiIiiiiiii', // TODO: replace with your Sheet ID
 
-  // Exact tab name, case-sensitive, as it appears at the bottom of the sheet.
+  // TODO: Exact tab name, case-sensitive, as it appears at the bottom of the sheet.
   tabName: 'inv-shoun',
 
   // Cell references (top-left cell if merged) for the three fields updated each month.
@@ -45,7 +45,9 @@ const CONFIG = {
   },
 
   doc: {
-    // From the Doc's URL: docs.google.com/document/d/<THIS>/edit
+    // TODO: From the Doc's URL: docs.google.com/document/d/<THIS>/edit
+    // Must be a native Google Doc (File -> Save as Google Docs if it
+    // started as a .docx), and must contain the literal text {{DATE}}.
     templateId: '1TUil000000000000000000000000000',
     copyNamePattern: 'Declaration of GST Non-Enrollment - {month_name}',
     // Maps literal text in the Doc to a field computed by buildPlaceholders_().
@@ -54,7 +56,7 @@ const CONFIG = {
     },
   },
 
-  // Drive folder (from its URL: drive.google.com/drive/folders/<THIS>)
+  // TODO: Drive folder (from its URL: drive.google.com/drive/folders/<THIS>)
   // where the monthly Doc copy and both PDFs get archived.
   archiveFolderId: '10HHhhhhhhhHHHHHHHHHHHHHHHH',
 
@@ -69,7 +71,7 @@ const CONFIG = {
   },
 
   email: {
-    to: ['test1@gmail.com'],
+    to: ['test1@gmail.com'], // TODO: real recipient address(es)
     cc: [],
     bcc: [],
     subject: 'Consultancy Invoice - {month_name}',
@@ -78,6 +80,6 @@ const CONFIG = {
 
   notify: {
     enabled: true,   // set true to get a one-line email on every outcome
-    recipient: 'test2@gmail.com',    // email address to notify, if enabled
+    recipient: 'test2@gmail.com', // TODO: your own address, if notify.enabled
   },
 };
