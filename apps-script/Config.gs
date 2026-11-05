@@ -20,7 +20,7 @@ const CONFIG = {
   timezone: 'Asia/Kolkata',
 
   // From the Sheet's URL: docs.google.com/spreadsheets/d/<THIS>/edit
-  spreadsheetId: '1Q4iArjr5-Xwoqe-nrxrnTUJWqkj89QRbUsChwIUStOY',
+  spreadsheetId: '1Q4iIIIIIIIIIIiiiiIiIiiIiiiiiii',
 
   // Exact tab name, case-sensitive, as it appears at the bottom of the sheet.
   tabName: 'inv-shoun',
@@ -46,7 +46,7 @@ const CONFIG = {
 
   doc: {
     // From the Doc's URL: docs.google.com/document/d/<THIS>/edit
-    templateId: '1TUil0m-Ps7JC1qO5CeF9lBh-bHVogr7u1Wio2ZmVn2o',
+    templateId: '1TUil000000000000000000000000000',
     copyNamePattern: 'Declaration of GST Non-Enrollment - {month_name}',
     // Maps literal text in the Doc to a field computed by buildPlaceholders_().
     placeholders: {
@@ -56,7 +56,7 @@ const CONFIG = {
 
   // Drive folder (from its URL: drive.google.com/drive/folders/<THIS>)
   // where the monthly Doc copy and both PDFs get archived.
-  archiveFolderId: '10HnzRqnJeNpfu75Pvnqpicdgc5Wal8ZO',
+  archiveFolderId: '10HHhhhhhhhHHHHHHHHHHHHHHHH',
 
   // Filenames aren't configured here: the Sheet PDF is named after the
   // spreadsheet's own file title + the invoice number digits (e.g.
@@ -69,7 +69,7 @@ const CONFIG = {
   },
 
   email: {
-    to: ['shounsalaji@gmail.com'],
+    to: ['test1@gmail.com'],
     cc: [],
     bcc: [],
     subject: 'Consultancy Invoice - {month_name}',
@@ -78,6 +78,6 @@ const CONFIG = {
 
   notify: {
     enabled: true,   // set true to get a one-line email on every outcome
-    recipient: 'uzertechs@gmail.com',    // email address to notify, if enabled
+    recipient: 'test2@gmail.com',    // email address to notify, if enabled
   },
 };
