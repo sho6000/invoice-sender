@@ -107,6 +107,11 @@ have them in a public repo.
      confirming idempotency works.
    - To reset and test again, run the `resetState` function once (clears
      the stored month/invoice-number state).
+   - **Before moving to step 7, run `resetState` one final time.**
+     Your test send already stored `sentMonth` for the current calendar
+     month — if you leave that in place, the real trigger will see that
+     month as "already sent" and skip it on the actual last day. Resetting
+     wipes that test state so the real first run starts clean.
 
 7. **Schedule it.**
    - Set `const FORCE_RUN = false;` in `config.gs` — important, otherwise
@@ -119,8 +124,13 @@ have them in a public repo.
      varies by month. Instead the script runs daily and only actually
      does anything on the real last day of the month — see
      `isLastDayOfMonth_` in `code.gs`.)
-   - Time of day: pick a window (e.g. 11pm–midnight), so it fires once
-     near the end of the last day.
+   - Time of day: pick an hour-long window around when you want it to
+     send (e.g. **9am–10am** for a morning send, or 11pm–midnight for
+     end-of-day). Triggers fire sometime within the chosen window, not
+     at an exact minute.
+   - Failure notification settings: **Notify me immediately** — since
+     this only runs once a month, you want to know right away if it
+     fails rather than waiting for a daily/weekly digest.
    - Save.
 
 8. **Optional: failure notifications.**
