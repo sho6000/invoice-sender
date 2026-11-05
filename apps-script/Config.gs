@@ -23,7 +23,7 @@ const CONFIG = {
   spreadsheetId: '1Q4iIIIIIIIIIIiiiiIiIiiIiiiiiii', // TODO: replace with your Sheet ID
 
   // TODO: Exact tab name, case-sensitive, as it appears at the bottom of the sheet.
-  tabName: 'inv-shoun',
+  tabName: 'Sheet 1',
 
   // Cell references (top-left cell if merged) for the three fields updated each month.
   cells: {
